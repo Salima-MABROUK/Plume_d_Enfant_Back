@@ -2,6 +2,8 @@ package com.poec.plumedenfant;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -18,32 +20,32 @@ public class HistoireTest {
 	
 	final int nbLike = 10;
 	
+	static String usingRandomUUID() {
+		UUID randomUUID = UUID.randomUUID();
+		return randomUUID.toString().replaceAll("_", "");
+	}
+	
+	private void CreateStory() {
+	    String randomStr = usingRandomUUID();
+	    System.out.println("A random string of 32 characters: " + randomStr);
+	}
+
 	@Test
 	@DisplayName("Test Image Not Null")
 	void testImageNotNull() {
 		Histoire histoirePass = new Histoire();
-		System.out.println("Test Image Not Null" + histoirePass.getImagePath());
+		System.out.println("Test Image Not Null " + histoirePass.getImagePath());
 	}
 	
 	@Test
-	@DisplayName("Test Nombre Like")
+	@DisplayName("Test Nombre Like A")
 	void testNombreLike() {
-		System.out.println("Test Nombre Like");
+		System.out.println("Test Nombre Like A");
 		Histoire histoirePass = new Histoire();
 		for (int i = 0; i < nbLike; i++) {
 			histoirePass.addLike();
 		}
 		assertEquals(nbLike, histoirePass.getNbLikes());
-	}
-	
-	@Test
-	@DisplayName("Test Nombre Like")
-	@RepeatedTest(nbLike)
-	void testNombreLikeRepeatedTest() {
-		Histoire histoire = new Histoire();
-		System.out.println("Test Nombre Like");
-		histoire.addLike();
-		assertEquals(nbLike, histoire.getNbLikes());
 	}
 	
 	@Test
@@ -55,6 +57,16 @@ public class HistoireTest {
 	}
 	
 	@Test
+	@DisplayName("Test Nombre Like repeat")
+	@RepeatedTest(nbLike)
+	void testNombreLikeRepeatedTest() {
+		Histoire histoire = new Histoire();
+		System.out.println("Test Nombre Like Repeat");
+		histoire.addLike();
+		assertEquals(nbLike, histoire.getNbLikes());
+	}
+	
+	@Test
 	@DisplayName("Test tri par genre")
 	void testTriParGenre() {
 		
@@ -63,7 +75,9 @@ public class HistoireTest {
 	@Test
 	@DisplayName("Test Suppression histoire")
 	void testSuppression() {
-		
+		System.out.println("Test Suppression histoire");
+		Histoire histoire = new Histoire();
+		CreateStory();
 	}
 	
 

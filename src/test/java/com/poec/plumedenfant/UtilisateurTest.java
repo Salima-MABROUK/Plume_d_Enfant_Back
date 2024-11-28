@@ -13,7 +13,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.poec.plumedenfant.Histoire.enumGenre;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -94,7 +93,7 @@ class UtilisateurTest {
 		Utilisateur utilisateur = new Utilisateur();
 		Histoire histoire;
 		for (int i = 0; i < 10; i++) {
-			histoire = new Histoire("test1", "texte", "image.jpg", 1, ));
+//			histoire = new Histoire("test1", "texte", "image.jpg", 1, );
 //			Utilisateur.
 		}
 		
