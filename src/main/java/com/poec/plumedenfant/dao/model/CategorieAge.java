@@ -2,25 +2,28 @@ package com.poec.plumedenfant.dao.model;
 
 public enum CategorieAge {
 	
-	DEUX_TROIS_ANS("deux à trois ans"),
-	QUATRE_CINQ_ANS("quatre à cinq ans"),
-	SIX_SEPT_ANS("six à sept ans"),
-	HUIT_NEUF_ANS("huit à neuf ans"),
-	DIX_ONZE_ANS("dix à onze ans");
+	DEUX_TROIS_ANS,
+	QUATRE_CINQ_ANS,
+	SIX_SEPT_ANS,
+	HUIT_NEUF_ANS,
+	DIX_ONZE_ANS;
 	
-	private String valeur;
-	
-	// Constructeur
-	private CategorieAge(String valeur) {
-
-	}
-
 	public String getValeur() {
-		return valeur;
+		switch(this) {
+			case DEUX_TROIS_ANS:
+				return "deux à trois ans";
+			case QUATRE_CINQ_ANS:
+				return "quatre à cinq ans";
+			case SIX_SEPT_ANS:
+				return "six à sept ans";
+			case HUIT_NEUF_ANS:
+				return "huit à neuf ans";
+			case DIX_ONZE_ANS:
+				return "dix à onze ans";
+			default: return "l'âge que tu veux";
+		}
 	}
 
-	public void setValeur(String valeur) {
-		this.valeur = valeur;
-	}
+	
 	
 }

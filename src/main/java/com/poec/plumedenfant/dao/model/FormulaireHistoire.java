@@ -3,25 +3,35 @@ package com.poec.plumedenfant.dao.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 public class FormulaireHistoire {
 	
-	class PersonnageSecondaire{
-		private String nom;
-		private String details;
-		private LienEntrePersonnages lien;
-	}
+	private int idCreateur;
 
-	private CategorieHistoire categorieHistoire;
-	private CategorieAge categorieAge;
+	@Enumerated(EnumType.STRING)
+	private CategorieHistoire categorieHistoire; // Champs requis
 	
-	private String nomPersoPrincipal;
-	private String detailPersoPrincipal;
+	@Enumerated(EnumType.STRING)
+	private CategorieAge categorieAge; // Champs requis
+	
+	private String nomPersoPrincipal; // Champs requis
+	private String detailPersoPrincipal; 
+	
+	
 	
 	// Les deux listes sont facultatives
 	private List<PersonnageSecondaire> listePersoSecondaire = new ArrayList<PersonnageSecondaire>();
 	private List<String> detailsSupplementaires = new ArrayList<String>();
 	
 	
+	public int getIdCreateur() {
+		return idCreateur;
+	}
+	public void setIdCreateur(int idCreateur) {
+		this.idCreateur = idCreateur;
+	}
 	public CategorieHistoire getCategorieHistoire() {
 		return categorieHistoire;
 	}
@@ -41,22 +51,56 @@ public class FormulaireHistoire {
 		this.nomPersoPrincipal = nomPersoPrincipal;
 	}
 	public String getDetailPersoPrincipal() {
-		return detailPersoPrincipal;
+		if(detailPersoPrincipal != null) {
+			return "Detail sur ce personnage : " + detailPersoPrincipal + ". ";
+		} else {
+			return "";
+		}
+		
 	}
 	public void setDetailPersoPrincipal(String detailPersoPrincipal) {
 		this.detailPersoPrincipal = detailPersoPrincipal;
 	}
-	public List<PersonnageSecondaire> getListePersoSecondaire() {
-		return listePersoSecondaire;
-	}
+	
 	public void setListePersoSecondaire(List<PersonnageSecondaire> listePersoSecondaire) {
 		this.listePersoSecondaire = listePersoSecondaire;
+	}
+	
+	public List<PersonnageSecondaire> getListePersoSecondaire() {
+		return listePersoSecondaire;
 	}
 	public List<String> getDetailsSupplementaires() {
 		return detailsSupplementaires;
 	}
 	public void setDetailsSupplementaires(List<String> detailsSupplementaires) {
 		this.detailsSupplementaires = detailsSupplementaires;
+	}
+	
+	
+	public String getPhraseListePersoSecondaire() {
+		String phrase = "Les personnage secondaires sont : ";
+		if(listePersoSecondaire.size() != 0) {
+			for(PersonnageSecondaire personnageSecondaire : listePersoSecondaire) {
+				phrase += personnageSecondaire.getNom() + " qui est " 
+						+ personnageSecondaire.getLien().getValeur() + " du personnage principal. " +
+						personnageSecondaire.getDetails();
+			}
+			return phrase;
+		} else {
+			return "";
+		}
+	}
+	
+	public String getPhraseDetailsSupplementaires() {
+		String phrase = "Details supplémentaires : ";
+		if(detailsSupplementaires.size() != 0) {
+			for(String detail : detailsSupplementaires) {
+				phrase += detail + ". ";
+			}
+			return phrase;
+		} else {
+			return "";
+		}
 	}
 
 	

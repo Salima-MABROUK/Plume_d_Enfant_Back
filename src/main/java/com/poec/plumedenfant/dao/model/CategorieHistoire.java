@@ -2,28 +2,28 @@ package com.poec.plumedenfant.dao.model;
 
 public enum CategorieHistoire {
 	
-	PIRATE("de la piraterie"),
-	FANTASTIQUE("fantastique"),
-	FARWEST("du Far-West"),
-	MEDIEVAL("médieval"),
-	SPACIAL("spacial"),
-	FUTURISTE("futuriste");
-	
-	private String valeur;
-	
-	// Constructeur
-	private CategorieHistoire(String valeur) {
-
-	}
+	PIRATE,
+	FANTASTIQUE,
+	FARWEST,
+	MEDIEVAL,
+	SPACIAL,
+	FUTURISTE;
 
 	public String getValeur() {
-		return valeur;
+		switch(this) {
+			case PIRATE:
+				return "de la piraterie";
+			case FANTASTIQUE:
+				return "fantastique";
+			case FARWEST:
+				return "du far-west";
+			case MEDIEVAL:
+				return "médieval";
+			case SPACIAL:
+				return "de l'espace";
+			case FUTURISTE:
+				return "futuriste";
+			default: return "que tu veux";
+		}
 	}
-
-	public void setValeur(String valeur) {
-		this.valeur = valeur;
-	}
-	
-	
-
 }

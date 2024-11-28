@@ -11,10 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 public class Histoire implements Serializable {
@@ -28,7 +24,7 @@ public class Histoire implements Serializable {
 	@Column
 	private String titre;
 	
-	@Column
+	@Column(columnDefinition ="LONGTEXT")
 	private String corps;
 	
 	@Column

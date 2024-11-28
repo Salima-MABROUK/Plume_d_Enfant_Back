@@ -23,7 +23,7 @@ public class PlumedenfantApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		ia.faireRequete("Donne moi la capital de l'italie");
+		// ia.faireRequete("Donne moi la capital de l'italie");
 		
 	}
 

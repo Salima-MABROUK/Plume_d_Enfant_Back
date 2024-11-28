@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.poec.plumedenfant.dao.HistoireDao;
+import com.poec.plumedenfant.dao.model.CategorieAge;
+import com.poec.plumedenfant.dao.model.CategorieHistoire;
 import com.poec.plumedenfant.dao.model.FormulaireHistoire;
 import com.poec.plumedenfant.dao.model.Histoire;
 
@@ -20,15 +22,34 @@ public class HistoireService {
 	@Autowired
 	private IAService iaService;
 	
+	@Autowired
+	private UtilisateurService utilisateurService;
+	
 	// Création de la requete
 	public String creationRequete(FormulaireHistoire formulaire) {
 		return "Ecris moi une histoire sur le thème " + formulaire.getCategorieHistoire().getValeur() +
-				" pour un enfant de " + formulaire.getCategorieAge().getValeur() ;
-	}
+				" pour un enfant de " + formulaire.getCategorieAge().getValeur() +
+				". Le personnage principal s'appelle " + formulaire.getNomPersoPrincipal() + ". " + 
+				formulaire.getDetailPersoPrincipal() +
+				formulaire.getPhraseListePersoSecondaire() + 
+				formulaire.getPhraseDetailsSupplementaires()
+				;
+		}
+	
 	
 	// Creation de l'histoire
-	public void insertHistoire(Histoire histoire, String request) {
+	public void insertHistoire(String request, int idCreateur, CategorieHistoire categorieHistorie, CategorieAge categorieAge) {
+		Histoire histoire = new Histoire();
+		
 		histoire.setId(null);
+		histoire.setCategorieHistoire(categorieHistorie);
+		histoire.setCategorieAge(categorieAge);
+		utilisateurService.getUtilisateurById(idCreateur).ifPresent(utilisateur -> {
+			histoire.setCreateur(utilisateur);
+		});
+		
+		System.out.println(request);
+		
 		String contenuHistoire = iaService.faireRequete(request);
 		if(!contenuHistoire.equals("error")) {
 			histoire.setCorps(contenuHistoire);

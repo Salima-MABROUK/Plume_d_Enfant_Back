@@ -32,21 +32,14 @@ public class UtilisateurService {
 	}
 	
 	// Modification d'un utilisateur
-	public void updateUtilisateur(Utilisateur utilisateur) {
-		if(utilisateurDao.findById(utilisateur.getId()) != null) {
-			utilisateurDao.save(utilisateur);
-		} else {
-			System.out.println("Update impossible : L'utilisateur renseigné n'est pas reconnu");
-		}
+	public void updateUtilisateur(Utilisateur utilisateur, int idUtilisateur) {
+		utilisateur.setId(idUtilisateur);
+		utilisateurDao.save(utilisateur);
 	}
 	
 	// Suppression d'un utilisateur
 	public void deleteUtilisateurById(int idUtilisateur) {
-		if(utilisateurDao.findById(idUtilisateur) != null) {
-			utilisateurDao.deleteById(idUtilisateur);
-		} else {
-			System.out.println("Suppression impossible : L'id d'utilisateur renseigné n'est pas reconnu");
-		}
+		utilisateurDao.deleteById(idUtilisateur);
 	}
 	
 	
