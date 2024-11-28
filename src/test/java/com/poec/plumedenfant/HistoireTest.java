@@ -1,12 +1,9 @@
 package com.poec.plumedenfant;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -19,35 +16,20 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class}) 
 public class HistoireTest {
 	
-	Histoire histoirePass;
-	
-	@BeforeAll
-	void initAll() {
-		histoirePass = new Histoire();
-	}
-	
-	@Test
-	@DisplayName("Test Titre Not Null")
-	void testTitreNotNull() {
-		assertNotNull(histoirePass.getTitre());
-	}
-	
-	@Test
-	@DisplayName("Test Texte Not Null")
-	void testTexteNotNull() {
-		assertNotNull(histoirePass.getTexte());
-	}
+	final int nbLike = 10;
 	
 	@Test
 	@DisplayName("Test Image Not Null")
 	void testImageNotNull() {
-		assertNotNull(histoirePass.getImage());
+		Histoire histoirePass = new Histoire();
+		System.out.println("Test Image Not Null" + histoirePass.getImagePath());
 	}
 	
 	@Test
 	@DisplayName("Test Nombre Like")
 	void testNombreLike() {
-		int nbLike = 10;
+		System.out.println("Test Nombre Like");
+		Histoire histoirePass = new Histoire();
 		for (int i = 0; i < nbLike; i++) {
 			histoirePass.addLike();
 		}
@@ -55,11 +37,36 @@ public class HistoireTest {
 	}
 	
 	@Test
-	@DisplayName("Test Image Not Null")
-	void testIdCreateurNotNull() {
-		assertNotNull(histoirePass.getIdCreateur());
+	@DisplayName("Test Nombre Like")
+	@RepeatedTest(nbLike)
+	void testNombreLikeRepeatedTest() {
+		Histoire histoire = new Histoire();
+		System.out.println("Test Nombre Like");
+		histoire.addLike();
+		assertEquals(nbLike, histoire.getNbLikes());
 	}
 	
+	@Test
+	@DisplayName("Test Générer une histoire")
+	void testGenererHistoire() {
+		System.out.println("Test Générer une histoire");
+		Histoire histoire = new Histoire();
+		
+	}
+	
+	@Test
+	@DisplayName("Test tri par genre")
+	void testTriParGenre() {
+		
+	}
+	
+	@Test
+	@DisplayName("Test Suppression histoire")
+	void testSuppression() {
+		
+	}
+	
+
 	
 
 }

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,23 +13,21 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.poec.plumedenfant.Histoire.enumGenre;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class}) // Exclure la configuration de la source de données
-class PlumedenfantApplicationTests {
+class UtilisateurTest {
 	
-	Utilisateur utilisateurPass;
-	Utilisateur utilisateurFail;
-	Utilisateur utilisateurPwdEmpty;
-	Utilisateur utilisateurMailEmpty;
+	static Utilisateur utilisateurPass; 
+	Utilisateur utilisateurFail = new Utilisateur("absc35rovidercom","abscom");
 	
 	@BeforeAll
-	void initAll() {
-		System.out.println("before All");
+	static void init() {
 		utilisateurPass = new Utilisateur("absc356@provider.com","absc35#Acom");
-		utilisateurFail = new Utilisateur("absc35rovidercom","abscom");
 	}
-
+	
 	@Test
 	@DisplayName("Test Mail Validity Pass")
 	void testMailValidityPass() {
@@ -81,5 +80,23 @@ class PlumedenfantApplicationTests {
 	void testPasswordNotNullFail() {
 		Utilisateur utilisateurPasswordNull = new Utilisateur("mal@cccc.com","");
 		assertFalse(utilisateurPasswordNull.checkPasswordNotNull());
+	}
+	
+	@Test
+	@DisplayName("Accès histoire par utilisateur")
+	void testAccesHistoireUtilisateur() {
+		
+	}
+	
+	@Test
+	@DisplayName("Trier les histoires par genre")
+	void testTrierHistoireParGenre(){
+		Utilisateur utilisateur = new Utilisateur();
+		Histoire histoire;
+		for (int i = 0; i < 10; i++) {
+			histoire = new Histoire("test1", "texte", "image.jpg", 1, ));
+//			Utilisateur.
+		}
+		
 	}
 }

@@ -1,13 +1,66 @@
 package com.poec.plumedenfant;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 public class Histoire {
+	
+	static private int id;
+	
+	private String Title;
+	private String Texte;
+	private String image;
+	private int nbLike = 0;
+	private int idCreateur;
+	private Genre Genre;
+	
+	public Histoire() {}
+	
+	public Histoire(String title, String texte, String image, int idCreateur, Genre genre) {
+		super();
+		Title = title;
+		Texte = texte;
+		this.image = image;
+		this.idCreateur = idCreateur;
+		this.Genre = genre;
+	}
+	
+	public static int getId() {
+		return id;
+	}
 
+	public static void setId(int id) {
+		Histoire.id = id;
+	}
+
+	public String getTitle() {
+		return Title;
+	}
+
+	public void setTitle(String title) {
+		Title = title;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public int getNbLike() {
+		return nbLike;
+	}
+
+	public void setNbLike(int nbLike) {
+		this.nbLike = nbLike;
+	}
+
+	public void setTexte(String texte) {
+		Texte = texte;
+	}
+
+	public void setIdCreateur(int idCreateur) {
+		this.idCreateur = idCreateur;
+	}
 
 	String getTitre() {
 		return "test";
@@ -17,25 +70,23 @@ public class Histoire {
 		return "Texte";
 	}
 	
-	@Test
-	@DisplayName("Test Image Not Null")
-	void testImageNotNull() {
-		assertNotNull(histoirePass.getImage());
+	String getImagePath() {
+		return "image path";
 	}
 	
-	@Test
-	@DisplayName("Test Nombre Like")
-	void testNombreLike() {
-		int nbLike = 10;
-		for (int i = 0; i < nbLike; i++) {
-			histoirePass.addLike();
-		}
-		assertEquals(nbLike, histoirePass.getNbLikes());
+	void addLike() {
+		nbLike++;
 	}
 	
-	@Test
-	@DisplayName("Test Image Not Null")
-	void testIdCreateurNotNull() {
-		assertNotNull(histoirePass.getIdCreateur());
+	int getNbLikes() {
+		return nbLike;
+	}
+	
+	int getIdCreateur() {
+		return 1;
+	}
+	
+	void delete(int id) {
+		
 	}
 }
