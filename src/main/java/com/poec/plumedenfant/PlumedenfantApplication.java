@@ -25,6 +25,8 @@ public class PlumedenfantApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		// ia.faireRequete("Donne moi la capital de l'italie");
 		
+		// ia.creerImage("Donne moi une image d'un chat avec un chapeau");
+		
 	}
 
 }

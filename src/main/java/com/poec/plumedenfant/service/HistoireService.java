@@ -25,22 +25,27 @@ public class HistoireService {
 	@Autowired
 	private UtilisateurService utilisateurService;
 	
-	// Création de la requete
+	// Création de la requete pour le corps de l'histoire
 	public String creationRequete(FormulaireHistoire formulaire) {
 		return "Ecris moi une histoire sur le thème " + formulaire.getCategorieHistoire().getValeur() +
 				" pour un enfant de " + formulaire.getCategorieAge().getValeur() +
 				". Le personnage principal s'appelle " + formulaire.getNomPersoPrincipal() + ". " + 
 				formulaire.getDetailPersoPrincipal() +
 				formulaire.getPhraseListePersoSecondaire() + 
-				formulaire.getPhraseDetailsSupplementaires()
+				formulaire.getPhraseDetailsSupplementaires() + 
+				". Donne un titre à cette histoire sur la première ligne sans utiliser de décoration de texte"
 				;
 		}
+	
+	// Creation de la requete pour l'image de l'histoire
+	public String creationRequeteImage(String histoire) {
+		return "Génère moi une image pour illustrer l'histoire suivante : " + histoire;
+	}
 	
 	
 	// Creation de l'histoire
 	public void insertHistoire(String request, int idCreateur, CategorieHistoire categorieHistorie, CategorieAge categorieAge) {
 		Histoire histoire = new Histoire();
-		
 		histoire.setId(null);
 		histoire.setCategorieHistoire(categorieHistorie);
 		histoire.setCategorieAge(categorieAge);
@@ -49,11 +54,25 @@ public class HistoireService {
 		});
 		
 		System.out.println(request);
-		
 		String contenuHistoire = iaService.faireRequete(request);
+		
+		// Extraction du titre pour le mettre dans l'attribut titre
+		int finTitre = contenuHistoire.indexOf("\n");
+		String titre = contenuHistoire.substring(0, finTitre);
+		contenuHistoire = contenuHistoire.substring(finTitre + 2); 
+		histoire.setTitre(titre);
+		
+		// On met le corps de l'histoire sans le titre
 		if(!contenuHistoire.equals("error")) {
 			histoire.setCorps(contenuHistoire);
 		}
+		
+		// Récupération de l'image en B64Json
+		String imageB64Json = iaService.creerImage(contenuHistoire);
+		if(!imageB64Json.equals("error")) {
+			histoire.setImageB64Json(imageB64Json);
+		}
+		
 		histoireDao.save(histoire);
 	}
 	
@@ -83,8 +102,8 @@ public class HistoireService {
 				histoireDao.updateTitre(idHistoire, histoire.getTitre());
 			}
 			// update de l'image de l'histoire
-			if(histoire.getUrlImage() != null) {
-				histoireDao.updateUrlImage(idHistoire, histoire.getUrlImage());
+			if(histoire.getImageB64Json() != null) {
+				histoireDao.updateUrlImage(idHistoire, histoire.getImageB64Json());
 			}
 		} else {
 			System.out.println("Update impossible : L'histoire n'est pas reconnue");
