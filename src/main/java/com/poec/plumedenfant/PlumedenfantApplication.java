@@ -11,11 +11,13 @@ import com.poec.plumedenfant.service.IAService;
 @SpringBootApplication
 public class PlumedenfantApplication implements CommandLineRunner {
 	
+	/*
 	private final IAService ia;
 	
 	public PlumedenfantApplication(IAService ia) {
 		this.ia = ia;
 	}
+	*/
 
 	public static void main(String[] args) {
 		SpringApplication.run(PlumedenfantApplication.class, args);
