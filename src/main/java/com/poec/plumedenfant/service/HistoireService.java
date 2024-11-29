@@ -68,9 +68,24 @@ public class HistoireService {
 	}
 	
 	// Modification d'une histoire
-	public void updateHistoire(Histoire histoire) {
-		if(histoireDao.findById(histoire.getId()) != null) {
-			histoireDao.save(histoire);
+	public void updateHistoire(Histoire histoire, int idHistoire) {
+		if(histoireDao.findById(idHistoire) != null) {
+			// update du corps de l'histoire
+			if(histoire.getCorps() != null) {
+				histoireDao.updateCorps(idHistoire, histoire.getCorps());
+			}
+			// update du nombre de like de l'histoire
+			if(histoire.getNbLike() != null) {
+				histoireDao.updateNbLike(idHistoire, histoire.getNbLike());
+			}
+			// update du titre de l'histoire
+			if(histoire.getTitre() != null) {
+				histoireDao.updateTitre(idHistoire, histoire.getTitre());
+			}
+			// update de l'image de l'histoire
+			if(histoire.getUrlImage() != null) {
+				histoireDao.updateUrlImage(idHistoire, histoire.getUrlImage());
+			}
 		} else {
 			System.out.println("Update impossible : L'histoire n'est pas reconnue");
 		}
@@ -83,7 +98,6 @@ public class HistoireService {
 		} else {
 			System.out.println("Suppression impossible : L'id de l'histoire n'est pas reconnu");
 		}
-		
 	}
 	
 }

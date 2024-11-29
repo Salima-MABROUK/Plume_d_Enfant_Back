@@ -33,8 +33,17 @@ public class UtilisateurService {
 	
 	// Modification d'un utilisateur
 	public void updateUtilisateur(Utilisateur utilisateur, int idUtilisateur) {
-		utilisateur.setId(idUtilisateur);
-		utilisateurDao.save(utilisateur);
+		if(utilisateurDao.findById(idUtilisateur) != null) {
+			if(utilisateur.getEmail() != null) {
+				utilisateurDao.updateEmail(idUtilisateur, utilisateur.getEmail());
+			}
+			if(utilisateur.getMdp() != null) {
+				utilisateurDao.updateMdp(idUtilisateur, utilisateur.getMdp());
+			}
+		} else {
+			System.out.println("Update impossible : L'utilisateur n'est pas reconnu");
+		}
+		
 	}
 	
 	// Suppression d'un utilisateur
