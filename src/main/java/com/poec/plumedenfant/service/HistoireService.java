@@ -58,8 +58,8 @@ public class HistoireService {
 	}
 	
 	// Récupération d'une histoire
-	public Optional<Histoire> getHistoireById(int idHistoire) {
-		return histoireDao.findById(idHistoire);
+	public Histoire getHistoireById(int idHistoire) {
+		return histoireDao.findById(idHistoire).orElse(null);
 	}
 	
 	// Récupération de la liste d'histoire

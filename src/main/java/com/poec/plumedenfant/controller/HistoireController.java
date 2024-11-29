@@ -36,13 +36,14 @@ public class HistoireController {
 
 	// Récupération d'une histoire
 	@GetMapping("/{idHistoire}")
-	public Optional<Histoire> getHistoireById(@PathVariable int idHistoire) {
-		Optional<Histoire> histoireRecup = histoireService.getHistoireById(idHistoire);
-		if(!histoireRecup.isEmpty()) {
-			return histoireRecup;
-		} else {
+	public Histoire getHistoireById(@PathVariable int idHistoire) {
+		Histoire histoireRecup = histoireService.getHistoireById(idHistoire);
+		
+		if(histoireRecup == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Histoire non trouvée");
 		}
+		
+		return histoireRecup;
 	}
 	
 	// Récupération de la liste d'histoire
