@@ -35,7 +35,7 @@ public class Histoire implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private CategorieAge categorieAge;
 	
-	@Column
+	@Column(columnDefinition = "LONGTEXT")
 	private String urlImage;
 	
 	@Column

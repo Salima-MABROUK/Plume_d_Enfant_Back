@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -64,7 +65,7 @@ public class UtilisateurController {
 	}
 	
 	// Modification d'un utilisateur
-	@PutMapping("/modification/{idUtilisateur}")
+	@PatchMapping("/modification/{idUtilisateur}")
 	public ResponseEntity<String> updateUtilisateur(@RequestBody Utilisateur utilisateur, @PathVariable int idUtilisateur) {
 		try {
 			utilisateurService.updateUtilisateur(utilisateur, idUtilisateur);
@@ -76,7 +77,6 @@ public class UtilisateurController {
 					.status(HttpStatus.CONFLICT)
 					.body(e.getMessage());
 		}
-		
 	}
 	
 	// Suppression d'un utilisateur
