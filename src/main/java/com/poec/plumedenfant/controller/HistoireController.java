@@ -1,7 +1,6 @@
 package com.poec.plumedenfant.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poec.plumedenfant.dao.model.CategorieAge;
 import com.poec.plumedenfant.dao.model.CategorieHistoire;
 import com.poec.plumedenfant.dao.model.FormulaireHistoire;
@@ -24,14 +22,11 @@ import com.poec.plumedenfant.dao.model.Histoire;
 import com.poec.plumedenfant.service.HistoireService;
 
 @RestController
-@RequestMapping("/histoires")
+@RequestMapping("/api/histoires")
 public class HistoireController {
 	
 	@Autowired
 	private HistoireService histoireService;
-	
-	@Autowired
-	ObjectMapper objectMapper;
 
 	// Récupération d'une histoire
 	@GetMapping("/{idHistoire}")

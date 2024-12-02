@@ -12,14 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.poec.plumedenfant.config.SecurityConfig;
 import com.poec.plumedenfant.dao.model.Histoire;
 import com.poec.plumedenfant.service.HistoireService;
 
 //(classes=...)
-
-//test
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -30,15 +31,20 @@ public class HistoireControlerTest {
 	
 	@MockBean
 	HistoireService histoireService;
-	 
+	
    @Test
+   @WithMockUser(roles = "MANAGER")
    public void testgetHistoireById() throws Exception {
+	   
+	   Histoire histoire = new Histoire();
+	   histoire.setId(1);
+	   histoire.setCorps("Test 1");
 
-	   when(histoireService.getHistoireById(2)).thenReturn(new Histoire());
+	   when(histoireService.getHistoireById(1)).thenReturn(histoire);
 	   
-	   this.mockMvc.perform(get("/histoires/2")).andDo(print()).andExpect(status().isOk())
-       .andExpect(content().string(containsString("{\"id\":null,\"name\":null,\"price\":null,\"vat\":null,\"category\":null,\"supplier\":null}")));
-	   
+	   this.mockMvc.perform(get("/histoires/1")).andDo(print()).andExpect(status().isOk())
+       .andExpect(content().string(containsString("{\"idHistoire\":Test 1}")));
+	     
 	 
 //	   Assert.assertEquals("Success",order.checkout(ppMock));
    }
