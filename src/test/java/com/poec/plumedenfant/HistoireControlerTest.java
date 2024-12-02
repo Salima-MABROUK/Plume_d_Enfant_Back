@@ -19,6 +19,8 @@ import com.poec.plumedenfant.service.HistoireService;
 
 //(classes=...)
 
+//test
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class HistoireControlerTest {
