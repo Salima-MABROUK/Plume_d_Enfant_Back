@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.poec.plumedenfant.dao.model.Histoire;
 import com.poec.plumedenfant.service.HistoireService;
 
+//(classes=...)
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class HistoireControlerTest {
@@ -36,7 +38,7 @@ public class HistoireControlerTest {
        .andExpect(content().string(containsString("{\"id\":null,\"name\":null,\"price\":null,\"vat\":null,\"category\":null,\"supplier\":null}")));
 	   
 	 
-	   //Assert.assertEquals("Success",order.checkout(ppMock));
+//	   Assert.assertEquals("Success",order.checkout(ppMock));
    }
 		
 }
