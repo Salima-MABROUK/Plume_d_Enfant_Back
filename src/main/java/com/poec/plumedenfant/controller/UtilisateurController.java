@@ -6,6 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,6 +24,7 @@ import com.poec.plumedenfant.service.UtilisateurService;
 
 @RestController
 @RequestMapping("/utilisateurs")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UtilisateurController {
 
 	@Autowired
@@ -28,6 +32,7 @@ public class UtilisateurController {
 	
 	// Récupération d'un utilisateur
 	@GetMapping("/{idUtilisateur}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Optional<Utilisateur> getUtilisateurById(@PathVariable int idUtilisateur) {
 		Optional<Utilisateur> utilisateurRecup = utilisateurService.getUtilisateurById(idUtilisateur);
 		if(!utilisateurRecup.isEmpty()) {
@@ -39,6 +44,7 @@ public class UtilisateurController {
 	
 	// Récupération de la liste des utilisateurs
 	@GetMapping("")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public List<Utilisateur> getAllUtilisateur() {
 		List<Utilisateur> listeRecup = (List<Utilisateur>) utilisateurService.getAllUtilisateur();
 		if(!listeRecup.isEmpty()) {
@@ -48,7 +54,8 @@ public class UtilisateurController {
 		}
 	}
 	
-	// Création d'un utilisateur
+	// Inscription d'un utilisateur
+	/*
 	@PostMapping("/inscription")
 	public ResponseEntity<String> insertUtilisateur(@RequestBody Utilisateur utilisateur) {
 		try {
@@ -62,9 +69,11 @@ public class UtilisateurController {
 					.body(e.getMessage());
 		}		
 	}
+	*/
 	
 	// Modification d'un utilisateur
 	@PatchMapping("/modification/{idUtilisateur}")
+	@PreAuthorize("hasAuthority('USER')")
 	public ResponseEntity<String> updateUtilisateur(@RequestBody Utilisateur utilisateur, @PathVariable int idUtilisateur) {
 		try {
 			utilisateurService.updateUtilisateur(utilisateur, idUtilisateur);
@@ -80,6 +89,7 @@ public class UtilisateurController {
 	
 	// Suppression d'un utilisateur
 	@DeleteMapping("/{idUtilisateur}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<String> deleteUtilisateurById(@PathVariable int idUtilisateur) {
 		try {
 			utilisateurService.deleteUtilisateurById(idUtilisateur);
@@ -93,13 +103,5 @@ public class UtilisateurController {
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

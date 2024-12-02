@@ -16,10 +16,12 @@ public class UtilisateurService {
 	private UtilisateurDao utilisateurDao;
 	
 	// Création d'un utilisateur
+	/*
 	public void insertUtilisateur(Utilisateur utilisateur) {
 		utilisateur.setId(null);
 		utilisateurDao.save(utilisateur);
 	}
+	*/
 	
 	// Récupération d'un utilisateur
 	public Optional<Utilisateur> getUtilisateurById(int idUtilisateur) {

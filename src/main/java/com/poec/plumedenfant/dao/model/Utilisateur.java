@@ -1,13 +1,20 @@
 package com.poec.plumedenfant.dao.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -30,6 +37,14 @@ public class Utilisateur implements Serializable {
 	
 	@OneToMany
 	private List<Histoire> listeVue;
+	
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "user_role", 
+				joinColumns = @JoinColumn(name = "utilisateur_id", referencedColumnName = "id"),
+				inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+	)
+	private Set<Role> roles = new HashSet<>();
 
 	public Integer getId() {
 		return id;
@@ -70,6 +85,15 @@ public class Utilisateur implements Serializable {
 	public void setListeVue(List<Histoire> listeVue) {
 		this.listeVue = listeVue;
 	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+	
 	
 	
 	

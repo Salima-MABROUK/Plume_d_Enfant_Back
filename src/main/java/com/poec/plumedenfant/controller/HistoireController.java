@@ -6,6 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,6 +28,7 @@ import com.poec.plumedenfant.service.HistoireService;
 
 @RestController
 @RequestMapping("/histoires")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class HistoireController {
 	
 	@Autowired
@@ -46,8 +50,8 @@ public class HistoireController {
 	
 	// Récupération de la liste d'histoire
 	@GetMapping("")
-	public List<Histoire> getAllHistoire() {
-		List<Histoire> listeRecup = (List<Histoire>) histoireService.getAllHistoire();
+	public List<Histoire> getAllHistoireSortedByLike() {
+		List<Histoire> listeRecup = (List<Histoire>) histoireService.getAllHistoireSortedByLike();
 		if(!listeRecup.isEmpty()) {
 			return listeRecup;
 		} else {
@@ -57,9 +61,9 @@ public class HistoireController {
 	
 	// Création d'une histoire
 	@PostMapping("/creation")
+	@PreAuthorize("hasAuthority('USER')")
 	public ResponseEntity<String> insertHistoire(@RequestBody FormulaireHistoire formulaireHistoire) {
 		try {
-			
 			System.out.println(formulaireHistoire);
 			
 			int idCreateur = formulaireHistoire.getIdCreateur();
@@ -79,6 +83,7 @@ public class HistoireController {
 	
 	// Modification d'une histoire
 	@PatchMapping("/modification/{idHistoire}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<String> updateHistoire(@RequestBody Histoire histoire, @PathVariable int idHistoire) {
 		try {
 			histoireService.updateHistoire(histoire, idHistoire);
@@ -93,6 +98,7 @@ public class HistoireController {
 	}
 	
 	@DeleteMapping("/{idHistoire}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<String> deleteHistoire(@PathVariable int idHistoire) {
 		try {
 			histoireService.deleteHistoireById(idHistoire);

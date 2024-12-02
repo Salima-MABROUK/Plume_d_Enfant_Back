@@ -73,6 +73,9 @@ public class HistoireService {
 			histoire.setImageB64Json(imageB64Json);
 		}
 		
+		// Initialisation du nombre de like
+		histoire.setNbLike(0);
+		
 		histoireDao.save(histoire);
 	}
 	
@@ -82,8 +85,8 @@ public class HistoireService {
 	}
 	
 	// Récupération de la liste d'histoire
-	public List<Histoire> getAllHistoire() {
-		return (List<Histoire>) histoireDao.findAll();
+	public List<Histoire> getAllHistoireSortedByLike() {
+		return (List<Histoire>) histoireDao.findAllHistoiresSortedByLike();
 	}
 	
 	// Modification d'une histoire

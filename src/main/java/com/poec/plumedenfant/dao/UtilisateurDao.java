@@ -1,6 +1,7 @@
 package com.poec.plumedenfant.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -31,5 +32,7 @@ public interface UtilisateurDao extends CrudRepository<Utilisateur, Integer> {
 	@Transactional
 	@Query("UPDATE Utilisateur u set u.listeVue =:listeVue WHERE u.id =:idUtilisateur")
 	public void updateListVue(int idUtilisateur, List<Histoire> listeVue);
+	
+	Optional<Utilisateur> findByEmail(String email);
 
 }
