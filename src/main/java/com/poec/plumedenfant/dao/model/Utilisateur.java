@@ -27,6 +27,9 @@ public class Utilisateur implements Serializable {
 	
 	@OneToMany
 	private List<Histoire> listeFavori;
+	
+	@OneToMany
+	private List<Histoire> listeVue;
 
 	public Integer getId() {
 		return id;
@@ -59,6 +62,16 @@ public class Utilisateur implements Serializable {
 	public void setListeFavori(List<Histoire> listeFavori) {
 		this.listeFavori = listeFavori;
 	}
+
+	public List<Histoire> getListeVue() {
+		return listeVue;
+	}
+
+	public void setListeVue(List<Histoire> listeVue) {
+		this.listeVue = listeVue;
+	}
+	
+	
 	
 	
 }

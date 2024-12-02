@@ -40,6 +40,12 @@ public class UtilisateurService {
 			if(utilisateur.getMdp() != null) {
 				utilisateurDao.updateMdp(idUtilisateur, utilisateur.getMdp());
 			}
+			if(!utilisateur.getListeFavori().isEmpty()) {
+				utilisateurDao.updateListFavori(idUtilisateur, utilisateur.getListeFavori());
+			}
+			if(!utilisateur.getListeVue().isEmpty()) {
+				utilisateurDao.updateListVue(idUtilisateur, utilisateur.getListeVue());
+			}
 		} else {
 			System.out.println("Update impossible : L'utilisateur n'est pas reconnu");
 		}

@@ -26,7 +26,7 @@ public interface HistoireDao extends CrudRepository<Histoire, Integer> {
 	
 	@Modifying
 	@Transactional
-	@Query("UPDATE Histoire h set h.urlImage = :url WHERE h.id =:idHistoire")
-	public void updateUrlImage(int idHistoire, String url);
+	@Query("UPDATE Histoire h set h.imageB64Json = :imageB64Json WHERE h.id =:idHistoire")
+	public void updateUrlImage(int idHistoire, String imageB64Json);
 
 }
