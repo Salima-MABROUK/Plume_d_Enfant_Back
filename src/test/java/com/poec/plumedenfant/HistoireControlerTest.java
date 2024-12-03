@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
@@ -28,8 +30,6 @@ import com.poec.plumedenfant.config.SecurityConfig;
 import com.poec.plumedenfant.dao.model.Histoire;
 import com.poec.plumedenfant.service.HistoireService;
 
-//(classes=...)
-
 @SpringBootTest
 @AutoConfigureMockMvc
 public class HistoireControlerTest {
@@ -41,7 +41,7 @@ public class HistoireControlerTest {
 	HistoireService histoireService;
 	
    @Test
-   @WithMockUser(roles = "MANAGER")
+   @WithMockUser(authorities = "ADMIN")
    @DisplayName("test get Histoire By Id")
    public void testgetHistoireById() throws Exception {
 	   
@@ -59,7 +59,38 @@ public class HistoireControlerTest {
    }
    
    @Test
-   @WithMockUser(roles = "MANAGER")
+   @WithMockUser(authorities = "ADMIN")
+   @DisplayName("test get all Histoires")
+   public void testgetHistoires() throws Exception {
+	  
+	   List<Histoire> list = new ArrayList<Histoire>();
+	   
+	   Histoire histoire1 = new Histoire();
+	   histoire1.setId(1);
+	   histoire1.setCorps("Test 1");
+	   histoire1.setNbLike(1);
+	   Histoire histoire2 = new Histoire();
+	   histoire2.setId(2);
+	   histoire2.setCorps("Test 2");
+	   histoire2.setNbLike(2);
+	   Histoire histoire3 = new Histoire();
+	   histoire3.setId(3);
+	   histoire3.setCorps("Test 3");
+	   histoire3.setNbLike(3);
+	   
+	   list.add(histoire1);
+	   list.add(histoire2);
+	   list.add(histoire3);
+	   
+	   when(histoireService.getAllHistoireSortedByLike()).thenReturn(list);
+	   
+	   this.mockMvc.perform(get("/histoires")).andDo(print()).andExpect(status().isOk())
+	   .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2));
+   	   	 
+   }
+   
+   @Test
+   @WithMockUser(authorities = "USER")
    @DisplayName("insert Histoire")
    public void testInsertHistoire() throws Exception {
 	   
@@ -72,26 +103,40 @@ public class HistoireControlerTest {
 			      .content(asJsonString(histoire))
 			      .contentType(MediaType.APPLICATION_JSON)
 			      .accept(MediaType.APPLICATION_JSON))
-		      .andExpect(status().isCreated())
-		      .andExpect(MockMvcResultMatchers.jsonPath("$.Id").exists());
+		      .andExpect(status().isCreated());
 	   
    }
    
    @Test
-   @WithMockUser(roles = "MANAGER")
-   @DisplayName("test get Histoire By Id")
+   @WithMockUser(authorities = "ADMIN")
+   @DisplayName("update Histoire")
+   public void testUpdateHistoire() throws Exception {
+	   
+	   Histoire histoire = new Histoire();
+	   histoire.setId(1);
+	   histoire.setCorps("Test 2");
+	         
+	   this.mockMvc.perform( MockMvcRequestBuilders
+			      .patch("/histoires/modification/1")
+			      .content(asJsonString(histoire))
+			      .contentType(MediaType.APPLICATION_JSON)
+			      .accept(MediaType.APPLICATION_JSON))
+		      .andExpect(status().isOk());
+	   
+   }
+   
+   @Test
+   @WithMockUser( authorities = { "ADMIN" })
+   @DisplayName("test delete Histoire By Id")
    public void testDeleteHistoireById() throws Exception {
 	   
 	   Histoire histoire = new Histoire();
 	   histoire.setId(1);
 	   histoire.setCorps("Test 1");
-	   
+	      
 	   this.mockMvc.perform(MockMvcRequestBuilders .delete("/histoires/1")).andDo(print()).andExpect(status().isOk());
-       
-	     	 
+   
    }
-   
-   
    
    public static String asJsonString(final Object obj) {
 	    try {

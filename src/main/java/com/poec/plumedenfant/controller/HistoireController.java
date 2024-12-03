@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poec.plumedenfant.dao.model.CategorieAge;
 import com.poec.plumedenfant.dao.model.CategorieHistoire;
 import com.poec.plumedenfant.dao.model.FormulaireHistoire;
@@ -34,9 +33,6 @@ public class HistoireController {
 	@Autowired
 	private HistoireService histoireService;
 	
-	@Autowired
-	ObjectMapper objectMapper;
-
 	// Récupération d'une histoire
 	@GetMapping("/{idHistoire}")
 	public Optional<Histoire> getHistoireById(@PathVariable int idHistoire) {
@@ -52,11 +48,7 @@ public class HistoireController {
 	@GetMapping("")
 	public List<Histoire> getAllHistoireSortedByLike() {
 		List<Histoire> listeRecup = (List<Histoire>) histoireService.getAllHistoireSortedByLike();
-		if(!listeRecup.isEmpty()) {
-			return listeRecup;
-		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Liste d'histoire vide");
-		}
+		return listeRecup;		
 	}
 	
 	// Création d'une histoire
@@ -111,5 +103,5 @@ public class HistoireController {
 					.body(e.getMessage());
 		}
 	}
-	
+
 }

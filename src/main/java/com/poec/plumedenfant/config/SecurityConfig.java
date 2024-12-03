@@ -19,12 +19,12 @@ import lombok.AllArgsConstructor;
 @Component
 @EnableMethodSecurity
 @AllArgsConstructor
-public class SerurityConfig {
+public class SecurityConfig {
 	
 	private JwtAuthenticationEntryPoint authenticationEntryPoint;
 	private JwtAuthenticationFilter authenticationFilter;
 	
-	public SerurityConfig(JwtAuthenticationEntryPoint authenticationEntryPoint, JwtAuthenticationFilter authenticationFilter) {
+	public SecurityConfig(JwtAuthenticationEntryPoint authenticationEntryPoint, JwtAuthenticationFilter authenticationFilter) {
 		this.authenticationEntryPoint = authenticationEntryPoint;
 		this.authenticationFilter = authenticationFilter;
 	}
@@ -43,10 +43,10 @@ public class SerurityConfig {
         		authorize.anyRequest().permitAll();
         	}).httpBasic(Customizer.withDefaults());
 		
-		http.exceptionHandling( exception -> exception
-				.authenticationEntryPoint(authenticationEntryPoint));
+		//http.exceptionHandling( exception -> exception
+		//		.authenticationEntryPoint(authenticationEntryPoint));
 		
-		http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+		//http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		
 		return http.build();
 	}
