@@ -28,6 +28,10 @@ public class UtilisateurService {
 		return utilisateurDao.findById(idUtilisateur);
 	}
 	
+	public Optional<Utilisateur> getUtilisateurByUsername(String email) {
+		return utilisateurDao.findByEmail(email);
+	}
+	
 	// Récupération de la liste des utilisateurs
 	public List<Utilisateur> getAllUtilisateur() {
 		return (List<Utilisateur>) utilisateurDao.findAll();

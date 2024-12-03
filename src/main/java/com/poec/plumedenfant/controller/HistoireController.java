@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,9 +32,6 @@ public class HistoireController {
 	
 	@Autowired
 	private HistoireService histoireService;
-	
-	@Autowired
-	ObjectMapper objectMapper;
 
 	// Récupération d'une histoire
 	@GetMapping("/{idHistoire}")
@@ -52,11 +48,7 @@ public class HistoireController {
 	@GetMapping("")
 	public List<Histoire> getAllHistoireSortedByLike() {
 		List<Histoire> listeRecup = (List<Histoire>) histoireService.getAllHistoireSortedByLike();
-		if(!listeRecup.isEmpty()) {
-			return listeRecup;
-		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Liste d'histoire vide");
-		}
+		return listeRecup;
 	}
 	
 	// Création d'une histoire

@@ -1,8 +1,6 @@
 package com.poec.plumedenfant.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -19,12 +17,12 @@ import lombok.AllArgsConstructor;
 @Component
 @EnableMethodSecurity
 @AllArgsConstructor
-public class SerurityConfig {
+public class SecurityConfig {
 	
 	private JwtAuthenticationEntryPoint authenticationEntryPoint;
 	private JwtAuthenticationFilter authenticationFilter;
 	
-	public SerurityConfig(JwtAuthenticationEntryPoint authenticationEntryPoint, JwtAuthenticationFilter authenticationFilter) {
+	public SecurityConfig(JwtAuthenticationEntryPoint authenticationEntryPoint, JwtAuthenticationFilter authenticationFilter) {
 		this.authenticationEntryPoint = authenticationEntryPoint;
 		this.authenticationFilter = authenticationFilter;
 	}
