@@ -85,10 +85,19 @@ public class HistoireControlerTest {
 	   when(histoireService.getAllHistoireSortedByLike()).thenReturn(list);
 	   
 	   this.mockMvc.perform(get("/histoires")).andDo(print()).andExpect(status().isOk())
-	   .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2));
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[0].corps").value("Test 1"))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[0].nbLike").value(1))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(2))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[1].corps").value("Test 2"))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[1].nbLike").value(2))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[2].id").value(3))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[2].corps").value("Test 3"))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[2].nbLike").value(3));
    	   	 
    }
    
+  
    @Test
    @WithMockUser(authorities = "USER")
    @DisplayName("insert Histoire")
