@@ -27,19 +27,19 @@ public class HistoireService {
 	
 	// Création de la requete pour le corps de l'histoire
 	public String creationRequete(FormulaireHistoire formulaire) {
-		return "Ecris moi une histoire sur le thème " + formulaire.getCategorieHistoire().getValeur() +
+		return "Ecris moi une histoire, en français, sur le thème " + formulaire.getCategorieHistoire().getValeur() +
 				" pour un enfant de " + formulaire.getCategorieAge().getValeur() +
 				". Le personnage principal s'appelle " + formulaire.getNomPersoPrincipal() + ". " + 
 				formulaire.getDetailPersoPrincipal() +
 				formulaire.getPhraseListePersoSecondaire() + 
 				formulaire.getPhraseDetailsSupplementaires() + 
-				". Donne un titre à cette histoire sur la première ligne sans utiliser de décoration de texte"
+				". Donne un titre à cette histoire sur la première ligne sans utiliser de décoration de texte, l'histoire doit faire environ 300 mots"
 				;
 		}
 	
 	// Creation de la requete pour l'image de l'histoire
 	public String creationRequeteImage(String histoire) {
-		return "Génère moi une image pour illustrer l'histoire suivante : " + histoire;
+		return "Génère moi une image pour illustrer l'histoire suivante : " + histoire + ". L'image ne doit pas contenir de texte";
 	}
 	
 	
@@ -68,7 +68,7 @@ public class HistoireService {
 		}
 		
 		// Récupération de l'image en B64Json
-		String imageB64Json = iaService.creerImage(contenuHistoire);
+		String imageB64Json = "data:image/png;base64," + iaService.creerImage(creationRequeteImage(contenuHistoire));
 		if(!imageB64Json.equals("error")) {
 			histoire.setImageB64Json(imageB64Json);
 		}

@@ -111,7 +111,7 @@ public class IAService {
 	    requestBody.addProperty("prompt", prompt);
 	    requestBody.addProperty("n", 1);
 	    requestBody.addProperty("response_format", "b64_json");
-	    requestBody.addProperty("size", "256x256");
+	    requestBody.addProperty("size", "1024x1024");
 	    
 	    String json = requestBody.toString();
 	    
