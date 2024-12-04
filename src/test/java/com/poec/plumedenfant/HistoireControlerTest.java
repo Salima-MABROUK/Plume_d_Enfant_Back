@@ -1,6 +1,7 @@
 package com.poec.plumedenfant;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -54,9 +55,29 @@ public class HistoireControlerTest {
 	   when(histoireService.getHistoireById(1)).thenReturn(optHistoire);
 	   
 	   this.mockMvc.perform(get("/histoires/1")).andDo(print()).andExpect(status().isOk())
-       .andExpect(content().string(containsString("{\"idHistoire\":Test 1}")));
-	     	 
+	   .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$.corps").value("Test 1"));
+	   
    }
+   
+//   @Test
+//   @WithMockUser(authorities = "ADMIN")
+//   @DisplayName("test get Histoire By Id Not found")
+//   public void testgetHistoireByIdNotFound() throws Exception {
+//	   
+//	   Histoire histoire = new Histoire();
+//	   histoire.setId(88);
+//	   histoire.setCorps("Test 1");
+//	   
+//	   Optional<Histoire> optHistoire = Optional.of(histoire);
+//	   
+//	   when(histoireService.getHistoireById(1)). .thenReturn(optHistoire);
+//	   
+//	   this.mockMvc.perform(get("/histoires/1")).andDo(print()).andExpect(status().isOk())
+//	   .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+//	   .andExpect(MockMvcResultMatchers.jsonPath("$.corps").value("Test 1"));
+//	   
+//   }
    
    @Test
    @WithMockUser(authorities = "ADMIN")
@@ -97,6 +118,44 @@ public class HistoireControlerTest {
    	   	 
    }
    
+   @Test
+   @WithMockUser(authorities = "ADMIN")
+   @DisplayName("test get all Histoires Order by")
+   public void testgetHistoiresOrderBy() throws Exception {
+	  
+	   List<Histoire> list = new ArrayList<Histoire>();
+	   
+	   Histoire histoire1 = new Histoire();
+	   histoire1.setId(1);
+	   histoire1.setCorps("Test 1");
+	   histoire1.setNbLike(1);
+	   Histoire histoire2 = new Histoire();
+	   histoire2.setId(2);
+	   histoire2.setCorps("Test 2");
+	   histoire2.setNbLike(2);
+	   Histoire histoire3 = new Histoire();
+	   histoire3.setId(3);
+	   histoire3.setCorps("Test 3");
+	   histoire3.setNbLike(3);
+	   
+	   list.add(histoire3);
+	   list.add(histoire2);
+	   list.add(histoire1);
+	   
+	   when(histoireService.getAllHistoireSortedByLike()).thenReturn(list);
+	   
+	   this.mockMvc.perform(get("/histoires")).andDo(print()).andExpect(status().isOk())
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[2].id").value(1))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[2].corps").value("Test 1"))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[2].nbLike").value(1))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(2))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[1].corps").value("Test 2"))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[1].nbLike").value(2))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(3))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[0].corps").value("Test 3"))
+	   .andExpect(MockMvcResultMatchers.jsonPath("$[0].nbLike").value(3));
+   	   	 
+   }
   
    @Test
    @WithMockUser(authorities = "USER")
@@ -112,26 +171,34 @@ public class HistoireControlerTest {
 			      .content(asJsonString(histoire))
 			      .contentType(MediaType.APPLICATION_JSON)
 			      .accept(MediaType.APPLICATION_JSON))
+	          .andDo(print())
 		      .andExpect(status().isCreated());
 	   
    }
    
    @Test
    @WithMockUser(authorities = "ADMIN")
-   @DisplayName("update Histoire")
+   @DisplayName("update Histoire (patch)")
    public void testUpdateHistoire() throws Exception {
-	   
+	     
 	   Histoire histoire = new Histoire();
 	   histoire.setId(1);
-	   histoire.setCorps("Test 2");
-	         
+	   histoire.setCorps("Test");
+	   
+	   Histoire updatedHistoire = new Histoire();
+	   updatedHistoire.setId(1);
+	   updatedHistoire.setCorps("Test xxx");
+	     
+	   when(histoireService.getHistoireById(1)).thenReturn(Optional.of(histoire));
+	       
 	   this.mockMvc.perform( MockMvcRequestBuilders
 			      .patch("/histoires/modification/1")
-			      .content(asJsonString(histoire))
+			      .content(asJsonString(updatedHistoire))
 			      .contentType(MediaType.APPLICATION_JSON)
 			      .accept(MediaType.APPLICATION_JSON))
-		      .andExpect(status().isOk());
-	   
+		      .andExpect(status().is2xxSuccessful())
+		      .andDo(print());
+
    }
    
    @Test
