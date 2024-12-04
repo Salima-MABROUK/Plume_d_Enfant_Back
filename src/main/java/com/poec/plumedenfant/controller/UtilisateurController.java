@@ -73,7 +73,7 @@ public class UtilisateurController {
 	
 	// Modification d'un utilisateur
 	@PatchMapping("/modification/{idUtilisateur}")
-	@PreAuthorize("hasAuthority('USER')")
+	@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 	public ResponseEntity<String> updateUtilisateur(@RequestBody Utilisateur utilisateur, @PathVariable int idUtilisateur) {
 		try {
 			utilisateurService.updateUtilisateur(utilisateur, idUtilisateur);

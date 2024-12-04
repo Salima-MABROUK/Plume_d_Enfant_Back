@@ -33,5 +33,8 @@ public interface HistoireDao extends CrudRepository<Histoire, Integer> {
 	
 	@Query("SELECT h FROM Histoire h ORDER BY h.nbLike DESC")
 	public List<Histoire> findAllHistoiresSortedByLike();
+	
+	@Query("SELECT h FROM Histoire h WHERE h.Createur.id =:idUtilisateur")
+	public List<Histoire> getVosHistoiresCrees(int idUtilisateur);
 
 }

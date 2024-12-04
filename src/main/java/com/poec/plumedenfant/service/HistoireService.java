@@ -33,13 +33,13 @@ public class HistoireService {
 				formulaire.getDetailPersoPrincipal() +
 				formulaire.getPhraseListePersoSecondaire() + 
 				formulaire.getPhraseDetailsSupplementaires() + 
-				". Donne un titre à cette histoire sur la première ligne sans utiliser de décoration de texte, l'histoire doit faire environ 300 mots"
+				". Donne un titre à cette histoire sur la première ligne sans utiliser de décoration de texte, l'histoire doit faire environ 600 mots, aére bien le texte en faisant des paragraphes, n'écris pas FIN à la fin, ne met pas de commentaires je ne veux voir que l'histoire "
 				;
 		}
 	
 	// Creation de la requete pour l'image de l'histoire
 	public String creationRequeteImage(String histoire) {
-		return "Génère moi une image pour illustrer l'histoire suivante : " + histoire + ". L'image ne doit pas contenir de texte";
+		return "Génère moi une image pour illustrer l'histoire suivante sans afficher de texte sur l'image : " + histoire;
 	}
 	
 	
@@ -87,6 +87,18 @@ public class HistoireService {
 	// Récupération de la liste d'histoire
 	public List<Histoire> getAllHistoireSortedByLike() {
 		return (List<Histoire>) histoireDao.findAllHistoiresSortedByLike();
+	}
+	
+	// Récupération de la dernière histoire
+	public Optional<Histoire> getLastHistoire() {
+		List<Histoire> liste = (List<Histoire>) histoireDao.findAll();
+		Histoire lastHistoire = liste.get(liste.size() -1);
+		return Optional.of(lastHistoire);
+	}
+	
+	// Récupération de la liste d'histoire créées par l'utilisateur connecté
+	public List<Histoire> getVosHistoiresCrees(int idUtilisateur) {
+		return histoireDao.getVosHistoiresCrees(idUtilisateur);
 	}
 	
 	// Modification d'une histoire
