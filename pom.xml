@@ -116,7 +116,12 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
-</dependencies>
+		<dependency>
+			<groupId>com.probtp</groupId>
+			<artifactId>projet1</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>

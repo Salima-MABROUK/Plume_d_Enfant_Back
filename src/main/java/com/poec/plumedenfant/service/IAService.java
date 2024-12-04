@@ -31,9 +31,9 @@ public class IAService {
 
     // Création du client OkHttp
     private final OkHttpClient client = new OkHttpClient().newBuilder()
-    		.connectTimeout(30, TimeUnit.SECONDS)
-    		.readTimeout(30, TimeUnit.SECONDS)
-    		.writeTimeout(30, TimeUnit.SECONDS)
+    		.connectTimeout(60, TimeUnit.SECONDS)
+    		.readTimeout(60, TimeUnit.SECONDS)
+    		.writeTimeout(60, TimeUnit.SECONDS)
     		.build();
     
 	public String faireRequete(String prompt) { 
